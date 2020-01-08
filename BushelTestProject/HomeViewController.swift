@@ -12,9 +12,18 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        //If user hasn't logged in, show login view, else load event list
+        if UserDefaults.standard.object(forKey: "token") == nil || UserDefaults.standard.object(forKey: "token") as! String == ""{
+            
+            self.performSegue(withIdentifier: "loginSegue", sender: nil)
+            
+        }
+        
     }
 
+    
+    
 
 }
 
