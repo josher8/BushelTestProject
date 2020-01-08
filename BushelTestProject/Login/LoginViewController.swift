@@ -11,6 +11,8 @@ import UIKit
 class LoginViewController: UIViewController, UITextFieldDelegate, LoginViewDelegate  {
     
     private let loginPresenter = LoginPresenter(loginService: LoginService())
+    //Delegate to reload Home View Controller
+    var reloadListDelegate: reloadEvents?
 
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
@@ -91,10 +93,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginViewDeleg
         }
         
     }
-
-}
-
-extension LoginViewController{
+    
+    
+    //Methods for Presenter
     
     func dismissView() {
         
@@ -113,7 +114,7 @@ extension LoginViewController{
     }
     
     func presentInvalidCredentialsError(){
-        print("Present called")
+
         loginView.addGestureRecognizer(loginGesture)
         
         let alert = UIAlertController.init(title: "Error", message: "Please Enter a Valid Username and Password", preferredStyle: UIAlertController.Style.alert)
@@ -122,6 +123,10 @@ extension LoginViewController{
         self.present(alert, animated: true, completion: nil)
         
     }
-
+    
+    func reloadHomeList(){
+        self.reloadListDelegate?.loadEventList()
+    }
 
 }
+

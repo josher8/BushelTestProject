@@ -20,6 +20,10 @@
 		C332111823C539A500E0C0F2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C332111723C539A500E0C0F2 /* LoginViewController.swift */; };
 		C332111A23C53DBC00E0C0F2 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C332111923C53DBC00E0C0F2 /* LoginPresenter.swift */; };
 		C332111C23C5422B00E0C0F2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C332111B23C5422B00E0C0F2 /* LoginService.swift */; };
+		C36D115E23C67E9700D2C5A8 /* EventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36D115D23C67E9700D2C5A8 /* EventRouter.swift */; };
+		C36D116023C67F3B00D2C5A8 /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36D115F23C67F3B00D2C5A8 /* EventService.swift */; };
+		C36D116223C67F8D00D2C5A8 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36D116123C67F8D00D2C5A8 /* Event.swift */; };
+		C36D116423C67FC000D2C5A8 /* EventPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36D116323C67FC000D2C5A8 /* EventPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +65,10 @@
 		C332111723C539A500E0C0F2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C332111923C53DBC00E0C0F2 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		C332111B23C5422B00E0C0F2 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		C36D115D23C67E9700D2C5A8 /* EventRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRouter.swift; sourceTree = "<group>"; };
+		C36D115F23C67F3B00D2C5A8 /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
+		C36D116123C67F8D00D2C5A8 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		C36D116323C67FC000D2C5A8 /* EventPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +142,7 @@
 				C332111423C5383B00E0C0F2 /* Models */,
 				C332111023C5347A00E0C0F2 /* Services */,
 				C332111D23C631AD00E0C0F2 /* Login */,
-				C33210E423C4F90800E0C0F2 /* HomeViewController.swift */,
+				C332111E23C6682D00E0C0F2 /* Home */,
 				C33210E023C4F90800E0C0F2 /* AppDelegate.swift */,
 				C33210E623C4F90800E0C0F2 /* Main.storyboard */,
 				C33210E923C4F90900E0C0F2 /* Assets.xcassets */,
@@ -167,6 +175,8 @@
 			children = (
 				C332111223C534B400E0C0F2 /* LoginRouter.swift */,
 				C332111B23C5422B00E0C0F2 /* LoginService.swift */,
+				C36D115D23C67E9700D2C5A8 /* EventRouter.swift */,
+				C36D115F23C67F3B00D2C5A8 /* EventService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -175,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				C332111523C5385800E0C0F2 /* Token.swift */,
+				C36D116123C67F8D00D2C5A8 /* Event.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -186,6 +197,15 @@
 				C332111923C53DBC00E0C0F2 /* LoginPresenter.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		C332111E23C6682D00E0C0F2 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				C33210E423C4F90800E0C0F2 /* HomeViewController.swift */,
+				C36D116323C67FC000D2C5A8 /* EventPresenter.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,9 +387,13 @@
 				C33210E523C4F90800E0C0F2 /* HomeViewController.swift in Sources */,
 				C332111623C5385800E0C0F2 /* Token.swift in Sources */,
 				C332111323C534B400E0C0F2 /* LoginRouter.swift in Sources */,
+				C36D116223C67F8D00D2C5A8 /* Event.swift in Sources */,
+				C36D116423C67FC000D2C5A8 /* EventPresenter.swift in Sources */,
 				C332111823C539A500E0C0F2 /* LoginViewController.swift in Sources */,
 				C33210E123C4F90800E0C0F2 /* AppDelegate.swift in Sources */,
+				C36D116023C67F3B00D2C5A8 /* EventService.swift in Sources */,
 				C332111C23C5422B00E0C0F2 /* LoginService.swift in Sources */,
+				C36D115E23C67E9700D2C5A8 /* EventRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

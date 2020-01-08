@@ -13,13 +13,14 @@ protocol LoginViewDelegate: NSObjectProtocol {
     func dismissView()
     func presentLoginError()
     func presentInvalidCredentialsError()
+    func reloadHomeList()
 }
 
 class LoginPresenter {
     
     private let loginService: LoginService
     weak private var loginViewDelegate: LoginViewDelegate?
-    
+
     init(loginService: LoginService){
         self.loginService = loginService
     }
@@ -36,14 +37,15 @@ class LoginPresenter {
             if token != nil {
                 
                 //Saves Token in UserDefaults.
-//                UserDefaults.standard.set(token?.token, forKey: "token")
+                UserDefaults.standard.set(token?.token, forKey: "token")
                 //This will retry to login on HomeViewController
-    //                    self.delegate?.retryList()
+                self.loginViewDelegate?.reloadHomeList()
                 self.loginViewDelegate?.dismissView()
                 
-                
             }else {
+                
                 self.loginViewDelegate?.presentLoginError()
+                
             }
             
         })
@@ -51,8 +53,9 @@ class LoginPresenter {
     }
     
     public func presentInvalidCredentialsError(){
-        print("Presenter present invalid")
+
         self.loginViewDelegate?.presentInvalidCredentialsError()
+        
     }
     
 }
