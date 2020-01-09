@@ -12,6 +12,8 @@ import Foundation
 protocol EventViewDelegate: NSObjectProtocol {
     func loadEvents()
     func presentEventLoadErrorDialog()
+    func presentLoginScreen()
+    func hideTable()
 }
 
 class EventPresenter{
@@ -52,6 +54,31 @@ class EventPresenter{
         if UserDefaults.standard.object(forKey: "token") != nil{
             UserDefaults.standard.set(nil, forKey: "token")
         }
+    }
+    
+    public func signOut(){
+        
+        //Removes token and empties array.
+        if UserDefaults.standard.object(forKey: "token") != nil{
+            
+            UserDefaults.standard.set(nil, forKey: "token")
+            eventArray.removeAll()
+            //Hides and reloads table in case there is data in view
+            self.eventViewDelegate?.hideTable()
+            self.eventViewDelegate?.presentLoginScreen()
+            
+        }else{
+            
+            self.eventViewDelegate?.hideTable()
+            self.eventViewDelegate?.presentLoginScreen()
+            
+        }
+    }
+    
+    public func presentLoginScreen(){
+        
+        self.eventViewDelegate?.presentLoginScreen()
+        
     }
     
     

@@ -17,10 +17,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DvD-Az-582">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" red="0.01176470588" green="0.33725490200000002" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="100" id="kLg-cj-ROU">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="100" id="kLg-cj-ROU" customClass="EventListTableViewCell" customModule="BushelTestProject" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kLg-cj-ROU" id="9iz-dp-lbe">
@@ -62,6 +62,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.01176470588" green="0.33725490200000002" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="dateLabel" destination="2X0-hz-zOe" id="TnC-wx-aGQ"/>
+                                            <outlet property="eventImageView" destination="b6n-o0-ZP5" id="Oeh-v9-1WS"/>
+                                            <outlet property="titleLabel" destination="DJv-XF-XJg" id="hGn-RI-p3J"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -79,7 +84,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ova-QV-oNj"/>
                     </view>
-                    <navigationItem key="navigationItem" id="bT9-zm-fee"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="bT9-zm-fee">
+                        <barButtonItem key="rightBarButtonItem" title="Sign Out" id="Iqw-gX-nRI">
+                            <connections>
+                                <action selector="signoutBTNPressed:" destination="BYZ-38-t0r" id="9l8-EJ-9H7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="DvD-Az-582" id="U70-wJ-bn3"/>
                         <segue destination="ILg-dr-7xt" kind="presentation" identifier="loginSegue" id="SEz-oG-RTM"/>

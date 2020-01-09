@@ -31,6 +31,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+
+    }
+    
     //Tableview methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,26 +45,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! EventListTableViewCell
         
         let event = eventPresenter.getEvents()[indexPath.row]
         
         //Sets Event Image on Cell
-        if let eventImageView = cell?.contentView.viewWithTag(1) as? UIImageView {
+        if let eventImageView = cell.eventImageView {
             
             eventImageView.sd_setImage(with: URL(string: event.image_url) )
             
         }
         
         //Event Title
-        if let titleLabel = cell?.contentView.viewWithTag(2) as? UILabel {
+        if let titleLabel = cell.titleLabel {
             
             titleLabel.text = event.title
             
         }
         
         //Date
-        if let dateLabel = cell?.contentView.viewWithTag(3) as? UILabel {
+        if let dateLabel = cell.dateLabel {
             
             let dateFormatterGet = DateFormatter()
             dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssz"
@@ -79,7 +85,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
         
-        return cell!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -114,13 +120,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         //If user hasn't logged in, show login view, else load event list
         if UserDefaults.standard.object(forKey: "token") == nil || UserDefaults.standard.object(forKey: "token") as! String == ""{
             
-            self.performSegue(withIdentifier: "loginSegue", sender: nil)
+            eventPresenter.presentLoginScreen()
             
         }else{
 
             eventPresenter.loadEventList()
             
         }
+        
+    }
+    
+    //Removes user token
+    @IBAction func signoutBTNPressed(_ sender: UIBarButtonItem) {
+        
+        eventPresenter.signOut()
         
     }
 
@@ -133,18 +146,33 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    func hideTable(){
+        
+        //Reloads table in case there is data still in view
+        tableView.reloadData()
+        tableView.isHidden = true
+        
+        
+    }
+    
     func presentEventLoadErrorDialog(){
         
         let alert = UIAlertController.init(title: "Error", message: "There was an error getting event data. Please try log in again", preferredStyle: UIAlertController.Style.alert)
         let defaultAction = UIAlertAction.init(title: "OK", style: UIAlertAction.Style.default, handler: { action in
             
             self.eventPresenter.clearToken()
-            self.performSegue(withIdentifier: "loginSegue", sender: nil)
+            self.eventPresenter.presentLoginScreen()
         })
         alert.addAction(defaultAction)
         self.present(alert, animated: true, completion: nil)
         
     }
-
+    
+    func presentLoginScreen(){
+        
+        self.performSegue(withIdentifier: "loginSegue", sender: nil)
+        
+    }
+    
 }
 
