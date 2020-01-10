@@ -26,7 +26,6 @@ class EventService{
     
     func loadEvent(eventID:String, completion: @escaping (Event?) -> Void){
         
-        //Post username and password. and returns token. Usually would have password encrypted
         Alamofire.request(EventRouter.eventID(eventID)).responseString { response in
             guard response.result.isSuccess,
                 let value = response.result.value else {
@@ -41,7 +40,6 @@ class EventService{
     
     func loadSpeaker(speakerID:String, completion: @escaping (Speaker?) -> Void){
         
-        //Post username and password. and returns token. Usually would have password encrypted
         Alamofire.request(EventRouter.speakers(speakerID)).responseString { response in
             guard response.result.isSuccess,
                 let value = response.result.value else {

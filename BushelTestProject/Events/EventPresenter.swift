@@ -186,6 +186,7 @@ class EventPresenter{
     
     //Get single Event
      public func getEvent() -> Event {
+        
          return event!
          
      }
@@ -194,9 +195,8 @@ class EventPresenter{
      public func getSpeakersArray() -> [Speaker] {
          
          return speakerArray
+        
      }
-    
-    
     
 
 }

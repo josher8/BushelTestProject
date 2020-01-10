@@ -42,19 +42,6 @@ public enum EventRouter: URLRequestConvertible {
         
     }
     
-//    var parameters: [String : Any] {
-//
-//        switch self {
-//        case .eventID(let id):
-//            return ["":id]
-//        case .speakers(let id):
-//            return ["id":id]
-//        default:
-//            return [:]
-//        }
-//
-//    }
-    
     public func asURLRequest() throws -> URLRequest {
         
         let url = try EventConstants.baseURLPath.asURL()

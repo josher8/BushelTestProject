@@ -13,7 +13,6 @@ class LoginService {
     
      func login(username:String, password: String, completion: @escaping (Token?) -> Void){
         
-        //Post username and password. and returns token. Usually would have password encrypted
         Alamofire.request(LoginRouter.login(username,password)).responseString { response in
             guard response.result.isSuccess,
                 let value = response.result.value else {
