@@ -10,6 +10,7 @@ import Foundation
 import EVReflection
 
 class Event: EVObject {
+    
     var id: Int = 0
     var title: String = ""
     var image_url: String = ""
@@ -17,4 +18,11 @@ class Event: EVObject {
     var end_date_time: String = ""
     var location: String = ""
     var featured: Bool = false
+    var event_description: String = ""
+    var speakers: [SpeakerID] = []
+    
+}
+
+class SpeakerID: EVObject {
+    var id: Int = 0
 }

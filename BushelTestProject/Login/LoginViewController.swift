@@ -76,8 +76,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginViewDeleg
     
     func loginPressed() {
         
-        print("Login Pressed")
-        
         //Removes Gesture so it doesn't get tapped more then once. Gets added back on completion
         loginView.removeGestureRecognizer(loginGesture)
         
@@ -126,6 +124,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginViewDeleg
     
     func reloadHomeList(){
         self.reloadListDelegate?.loadEventList()
+    }
+    
+    func showSpinner() {
+        showSpinner(onView: self.view)
+    }
+    
+    func hideSpinner() {
+        removeSpinner()
     }
 
 }

@@ -14,6 +14,8 @@ protocol LoginViewDelegate: NSObjectProtocol {
     func presentLoginError()
     func presentInvalidCredentialsError()
     func reloadHomeList()
+    func showSpinner()
+    func hideSpinner()
 }
 
 class LoginPresenter {
@@ -30,7 +32,8 @@ class LoginPresenter {
     }
     
     public func loginUserSaveToken(username : String, password : String) {
-        print("Login User Pressed")
+        
+        self.loginViewDelegate?.showSpinner()
         
         self.loginService.login(username: username, password: password, completion: { token in
             
@@ -42,11 +45,14 @@ class LoginPresenter {
                 self.loginViewDelegate?.reloadHomeList()
                 self.loginViewDelegate?.dismissView()
                 
-            }else {
+                
+            } else {
                 
                 self.loginViewDelegate?.presentLoginError()
                 
             }
+            
+            self.loginViewDelegate?.hideSpinner()
             
         })
         

@@ -13,7 +13,7 @@ protocol reloadEvents {
     func loadEventList()
 }
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EventViewDelegate, reloadEvents {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EventListViewDelegate, reloadEvents {
     
     private let eventPresenter = EventPresenter(eventService: EventService())
     
@@ -23,7 +23,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.title = "Events"
         
-        eventPresenter.setViewDelegate(eventViewDelegate: self)
+        eventPresenter.setEventListViewDelegate(eventListViewDelegate: self)
         
         self.tableView.isHidden = true
         
@@ -40,7 +40,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Tableview methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return eventPresenter.getEvents().count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,20 +93,23 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         //Pass event object to Single Event
-//        let event = eventArray[indexPath.row]
-//        self.performSegue(withIdentifier: "eventSegue", sender: event)
-//
-//        tableView.deselectRow(at: indexPath, animated: true)
+        let event = eventPresenter.getEvents()[indexPath.row]
+        
+        self.performSegue(withIdentifier: "eventSegue", sender: String(event.id))
+
+        tableView.deselectRow(at: indexPath, animated: true)
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-//        if segue.identifier == "eventSegue" {
-//            let singleEventController = segue.destination as? SingleEventViewController
-//            singleEventController?.event = sender as? Event
-//        }
-        
+        if segue.identifier == "eventSegue" {
+            
+            let singleEventController = segue.destination as? SingleEventViewController
+            singleEventController?.eventID = sender as? String
+            
+        }
+
         //Set self delegate in LoginViewController so can reload table view after authentication
         if segue.identifier == "loginSegue" {
             
@@ -124,7 +129,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }else{
 
-            eventPresenter.loadEventList()
+            eventPresenter.populateEventList()
             
         }
         
@@ -137,7 +142,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
 
-    //Event Presenter Methods
+    //-------------Event Presenter Methods
     
     func loadEvents(){
         
@@ -172,6 +177,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.performSegue(withIdentifier: "loginSegue", sender: nil)
         
+    }
+    
+    func showSpinner() {
+        showSpinner(onView: self.view)
+    }
+    
+    func hideSpinner() {
+        removeSpinner()
     }
     
 }

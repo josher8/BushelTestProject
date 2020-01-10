@@ -23,5 +23,35 @@ class EventService{
             completion([Event](json: value))
         }
     }
+    
+    func loadEvent(eventID:String, completion: @escaping (Event?) -> Void){
+        
+        //Post username and password. and returns token. Usually would have password encrypted
+        Alamofire.request(EventRouter.eventID(eventID)).responseString { response in
+            guard response.result.isSuccess,
+                let value = response.result.value else {
+                    print("Error while getting event: \(String(describing: response.result.error))")
+                    completion(nil)
+                    return
+            }
+            completion(Event(json: value))
+        }
+        
+    }
+    
+    func loadSpeaker(speakerID:String, completion: @escaping (Speaker?) -> Void){
+        
+        //Post username and password. and returns token. Usually would have password encrypted
+        Alamofire.request(EventRouter.speakers(speakerID)).responseString { response in
+            guard response.result.isSuccess,
+                let value = response.result.value else {
+                    print("Error while getting speaker: \(String(describing: response.result.error))")
+                    completion(nil)
+                    return
+            }
+            completion(Speaker(json: value))
+        }
+        
+    }
 
 }

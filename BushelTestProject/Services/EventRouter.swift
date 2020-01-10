@@ -17,13 +17,13 @@ public enum EventRouter: URLRequestConvertible {
     }
     
     case events
-    case eventsID(String)
+    case eventID(String)
     case speakers(String)
     
     var method: HTTPMethod {
         
         switch self {
-        case .events, .eventsID, .speakers:
+        case .events, .eventID, .speakers:
             return .get
         }
         
@@ -34,26 +34,26 @@ public enum EventRouter: URLRequestConvertible {
         switch self {
         case .events:
             return "/events"
-        case .eventsID:
-            return "/events"
-        case .speakers:
-            return "/speakers"
+        case .eventID(let eventID):
+            return "/events/" + eventID
+        case .speakers(let speakerID):
+            return "/speakers/" + speakerID
         }
         
     }
     
-    var parameters: [String : Any] {
-        
-        switch self {
-        case .eventsID(let id):
-            return ["id":id]
-        case .speakers(let id):
-            return ["id":id]
-        default:
-            return [:]
-        }
-        
-    }
+//    var parameters: [String : Any] {
+//
+//        switch self {
+//        case .eventID(let id):
+//            return ["":id]
+//        case .speakers(let id):
+//            return ["id":id]
+//        default:
+//            return [:]
+//        }
+//
+//    }
     
     public func asURLRequest() throws -> URLRequest {
         
@@ -69,7 +69,7 @@ public enum EventRouter: URLRequestConvertible {
         request.httpMethod = method.rawValue
         request.setValue(token, forHTTPHeaderField: "Authorization")
         
-        return try URLEncoding.default.encode(request, with: parameters)
+        return try URLEncoding.default.encode(request, with: nil)
         
     }
     
