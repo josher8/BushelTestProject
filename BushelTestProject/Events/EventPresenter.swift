@@ -195,5 +195,8 @@ class EventPresenter{
          
          return speakerArray
      }
+    
+    
+    
 
 }

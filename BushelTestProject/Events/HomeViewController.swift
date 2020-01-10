@@ -31,12 +31,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-
-    }
-    
     //Tableview methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

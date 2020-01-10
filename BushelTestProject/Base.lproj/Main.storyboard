@@ -75,7 +75,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.01176470588" green="0.2666666667" blue="0.41568627450000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Ova-QV-oNj" firstAttribute="trailing" secondItem="DvD-Az-582" secondAttribute="trailing" id="0hm-vT-fBX"/>
                             <constraint firstItem="DvD-Az-582" firstAttribute="leading" secondItem="Ova-QV-oNj" secondAttribute="leading" id="2g2-Ab-yOE"/>
@@ -87,6 +87,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="bT9-zm-fee">
                         <barButtonItem key="rightBarButtonItem" title="Sign Out" id="Iqw-gX-nRI">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="signoutBTNPressed:" destination="BYZ-38-t0r" id="9l8-EJ-9H7"/>
                             </connections>
@@ -101,7 +102,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="39" y="31"/>
+            <point key="canvasLocation" x="-51" y="31"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="wum-Nw-hHz">
@@ -179,6 +180,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VKA-6o-36D">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.011764705882352941" green="0.26666666666666666" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Hg7-np-B6t"/>
