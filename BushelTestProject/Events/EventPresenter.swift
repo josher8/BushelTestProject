@@ -57,6 +57,8 @@ class EventPresenter{
     //Loads Event List in HomeView Controller
     func populateEventList(){
         
+        self.eventListViewDelegate?.showSpinner()
+        
         self.eventService.loadEventList(completion: {
             events in
             
@@ -70,6 +72,8 @@ class EventPresenter{
                 self.eventListViewDelegate?.presentEventLoadErrorDialog()
                 
             }
+            
+            self.eventListViewDelegate?.hideSpinner()
             
         })
         
@@ -133,6 +137,7 @@ class EventPresenter{
         //Clears Event and speaker array
         event = nil
         speakerArray.removeAll()
+        self.singleEventViewDelegate?.showSpinner()
         
         self.eventService.loadEvent(eventID: eventID, completion: {
             event in
@@ -145,6 +150,7 @@ class EventPresenter{
                 self.populateSpeakers(event: event!)
                  
             }
+            self.singleEventViewDelegate?.hideSpinner()
             
         })
         
@@ -168,7 +174,6 @@ class EventPresenter{
                 
                 //Loads the speakers after all the speakers been added to array
                 if(index == (self.event!.speakers.count - 1)){
-                    
                     self.singleEventViewDelegate?.loadSpeakers()
                     
                 }
@@ -190,6 +195,5 @@ class EventPresenter{
          
          return speakerArray
      }
-    
-    
+
 }
