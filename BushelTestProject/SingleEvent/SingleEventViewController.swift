@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 import SDWebImage
 
-class SingleEventViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SingleEventViewDelegate {
+class SingleEventViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    private let eventPresenter = EventPresenter(eventService: EventService())
+    var presenter: SingleEventPresenter!
 
     @IBOutlet var eventImageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
@@ -29,6 +29,16 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
     
     var tableViewHeightConstraint: NSLayoutConstraint?
     
+    //Initializer
+    static func create(eventID: String) -> SingleEventViewController{
+        
+        let vc = UIStoryboard(name: "SingleEvent", bundle: nil).instantiateViewController(withIdentifier: "SingleEventViewController") as! SingleEventViewController
+        vc.modalPresentationStyle = .fullScreen
+        vc.presenter = SingleEventPresenter(with: vc, eventID: eventID)
+        return vc
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,12 +51,13 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
         NSLayoutConstraint.activate([self.tableViewHeightConstraint!])
         
     }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+
+        presenter?.populateEventandSpeakers()
         
-        eventPresenter.setSingleEventViewDelegate(singleEventViewDelegate: self)
-        eventPresenter.populateEventandSpeakers(eventID: eventID!)
     }
 
     @IBAction func locationBTNPressed(_ sender: UIButton) {
@@ -65,7 +76,7 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return eventPresenter.getSpeakersArray().count
+        return presenter.getSpeakersArray().count
         
     }
     
@@ -73,7 +84,7 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
     
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! SpeakerTableViewCell
         
-        let speaker = eventPresenter.getSpeakersArray()[indexPath.row]
+        let speaker = presenter.getSpeakersArray()[indexPath.row]
         
         print(indexPath.row)
         
@@ -95,17 +106,19 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-    //--------------Single Event Delegate methods
+}
+
+extension SingleEventViewController: SingleEventView {
     
-    func loadEvent(){
+    func loadEvent(event: Event){
         
-        self.title = eventPresenter.getEvent().title
+        self.title = event.title
+               
+        eventImageView.sd_setImage(with: URL(string: (event.image_url)) )
         
-        eventImageView.sd_setImage(with: URL(string: (eventPresenter.getEvent().image_url)) )
+        titleLabel.text = event.title
         
-        titleLabel.text = eventPresenter.getEvent().event_description
-        
-        descriptionLabel.text = eventPresenter.getEvent().event_description
+        descriptionLabel.text = event.event_description
         
         //Set Date
         let dateFormatterGet = DateFormatter()
@@ -116,39 +129,36 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
         dateFormatterPrintHA.dateFormat = "ha"
         
         //Get Start Date
-        let startDate = dateFormatterGet.date(from: eventPresenter.getEvent().start_date_time)
+        let startDate = dateFormatterGet.date(from: event.start_date_time)
         let startDateString = dateFormatterPrint.string(from: startDate!)
         
         //Get End Date
-        let endDate = dateFormatterGet.date(from: eventPresenter.getEvent().end_date_time)
+        let endDate = dateFormatterGet.date(from: event.end_date_time)
         let endDateString = dateFormatterPrintHA.string(from: endDate!)
         
         dateLabel.text = startDateString + " - " + endDateString
         
-        locationButton.setTitle(eventPresenter.getEvent().location, for: UIControl.State.normal)
+        locationButton.setTitle(event.location, for: UIControl.State.normal)
         
-        address = eventPresenter.getEvent().location
+        address = event.location
         
     }
     
     func loadSpeakers(){
         
         //Sets speaker label
-        if eventPresenter.getSpeakersArray().count > 1 {
+        if presenter.getSpeakersArray().count > 1 {
             speakerLabel.text = "Speakers"
         }else{
             speakerLabel.text = "Speaker"
         }
         
         //Reloads tableview with speaker data and sets tableview height based on contents. View will scroll if tableview content overflows device height.
-        DispatchQueue.main.async {
-            
-            self.tableView.reloadData()
-            self.view.layoutIfNeeded()
-            self.tableViewHeightConstraint!.constant = self.tableView.contentSize.height
-            self.view.layoutIfNeeded()
-            
-        }
+        self.tableView.reloadData()
+        self.view.layoutIfNeeded()
+        self.tableViewHeightConstraint!.constant = self.tableView.contentSize.height
+        self.view.layoutIfNeeded()
+
     }
     
     func showSpinner() {
@@ -159,4 +169,27 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
         removeSpinner()
     }
     
+    func presentEventLoadErrorDialog(){
+        
+        let alert = UIAlertController.init(title: "Error", message: "There was an error getting the event data.", preferredStyle: UIAlertController.Style.alert)
+        let defaultAction = UIAlertAction.init(title: "OK", style: UIAlertAction.Style.default, handler: { action in
+            
+
+        })
+        alert.addAction(defaultAction)
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func presentSpeakerLoadErrorDialog(){
+        
+        let alert = UIAlertController.init(title: "Error", message: "There was an error getting the speaker data.", preferredStyle: UIAlertController.Style.alert)
+        let defaultAction = UIAlertAction.init(title: "OK", style: UIAlertAction.Style.default, handler: { action in
+            
+
+        })
+        alert.addAction(defaultAction)
+        self.present(alert, animated: true, completion: nil)
+        
+    }
 }

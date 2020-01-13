@@ -15,7 +15,7 @@ protocol reloadEvents {
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EventListViewDelegate, reloadEvents {
     
-    private let eventPresenter = EventPresenter(eventService: EventService())
+    private let eventPresenter = EventPresenter()
     
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
@@ -89,7 +89,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         //Pass event object to Single Event
         let event = eventPresenter.getEvents()[indexPath.row]
         
-        self.performSegue(withIdentifier: "eventSegue", sender: String(event.id))
+        let eventID = String(event.id)
+    self.navigationController?.pushViewController(SingleEventViewController.create(eventID: eventID), animated: true)
 
         tableView.deselectRow(at: indexPath, animated: true)
         

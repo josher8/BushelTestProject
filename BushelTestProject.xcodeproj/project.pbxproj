@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7FA74D5E25EF40632F0A11AD /* Pods_BushelTestProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034B9CD78BB08727C1EEC10F /* Pods_BushelTestProject.framework */; };
+		C300158F23CD106800024E90 /* SingleEventPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C300158E23CD106800024E90 /* SingleEventPresenter.swift */; };
+		C300159123CD1C6700024E90 /* SingleEvent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C300159023CD1C6700024E90 /* SingleEvent.storyboard */; };
 		C33210E123C4F90800E0C0F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33210E023C4F90800E0C0F2 /* AppDelegate.swift */; };
 		C33210E523C4F90800E0C0F2 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33210E423C4F90800E0C0F2 /* HomeViewController.swift */; };
 		C33210E823C4F90800E0C0F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C33210E623C4F90800E0C0F2 /* Main.storyboard */; };
@@ -52,6 +54,8 @@
 		034B9CD78BB08727C1EEC10F /* Pods_BushelTestProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BushelTestProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E9295D09C228A9B0D464B64 /* Pods-BushelTestProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BushelTestProject.release.xcconfig"; path = "Target Support Files/Pods-BushelTestProject/Pods-BushelTestProject.release.xcconfig"; sourceTree = "<group>"; };
 		9B0C3DD67288C4E08609DA60 /* Pods-BushelTestProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BushelTestProject.debug.xcconfig"; path = "Target Support Files/Pods-BushelTestProject/Pods-BushelTestProject.debug.xcconfig"; sourceTree = "<group>"; };
+		C300158E23CD106800024E90 /* SingleEventPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleEventPresenter.swift; sourceTree = "<group>"; };
+		C300159023CD1C6700024E90 /* SingleEvent.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SingleEvent.storyboard; sourceTree = "<group>"; };
 		C33210DD23C4F90800E0C0F2 /* BushelTestProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BushelTestProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C33210E023C4F90800E0C0F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C33210E423C4F90800E0C0F2 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +128,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C300159223CD32E600024E90 /* SingleEvent */ = {
+			isa = PBXGroup;
+			children = (
+				C300159023CD1C6700024E90 /* SingleEvent.storyboard */,
+				C36D116723C7AFD400D2C5A8 /* SingleEventViewController.swift */,
+				C300158E23CD106800024E90 /* SingleEventPresenter.swift */,
+				C36D116B23C8DB6800D2C5A8 /* SpeakerTableViewCell.swift */,
+			);
+			path = SingleEvent;
+			sourceTree = "<group>";
+		};
 		C33210D423C4F90800E0C0F2 = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +168,7 @@
 				C332111023C5347A00E0C0F2 /* Services */,
 				C332111D23C631AD00E0C0F2 /* Login */,
 				C332111E23C6682D00E0C0F2 /* Events */,
+				C300159223CD32E600024E90 /* SingleEvent */,
 				C33210E023C4F90800E0C0F2 /* AppDelegate.swift */,
 				C36D116D23C90ECA00D2C5A8 /* UIViewControllerExtensions.swift */,
 				C33210E623C4F90800E0C0F2 /* Main.storyboard */,
@@ -217,8 +233,6 @@
 				C33210E423C4F90800E0C0F2 /* HomeViewController.swift */,
 				C36D116323C67FC000D2C5A8 /* EventPresenter.swift */,
 				C36D116523C780C300D2C5A8 /* EventListTableViewCell.swift */,
-				C36D116723C7AFD400D2C5A8 /* SingleEventViewController.swift */,
-				C36D116B23C8DB6800D2C5A8 /* SpeakerTableViewCell.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -330,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C33210ED23C4F90900E0C0F2 /* LaunchScreen.storyboard in Resources */,
+				C300159123CD1C6700024E90 /* SingleEvent.storyboard in Resources */,
 				C33210EA23C4F90900E0C0F2 /* Assets.xcassets in Resources */,
 				C33210E823C4F90800E0C0F2 /* Main.storyboard in Resources */,
 			);
@@ -399,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C36D116E23C90ECA00D2C5A8 /* UIViewControllerExtensions.swift in Sources */,
+				C300158F23CD106800024E90 /* SingleEventPresenter.swift in Sources */,
 				C36D116623C780C300D2C5A8 /* EventListTableViewCell.swift in Sources */,
 				C332111A23C53DBC00E0C0F2 /* LoginPresenter.swift in Sources */,
 				C33210E523C4F90800E0C0F2 /* HomeViewController.swift in Sources */,

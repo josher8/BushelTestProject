@@ -75,7 +75,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.01176470588" green="0.2666666667" blue="0.41568627450000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.011764705882352941" green="0.33725490196078434" blue="0.52549019607843139" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Ova-QV-oNj" firstAttribute="trailing" secondItem="DvD-Az-582" secondAttribute="trailing" id="0hm-vT-fBX"/>
                             <constraint firstItem="DvD-Az-582" firstAttribute="leading" secondItem="Ova-QV-oNj" secondAttribute="leading" id="2g2-Ab-yOE"/>
@@ -97,7 +97,6 @@
                     <connections>
                         <outlet property="tableView" destination="DvD-Az-582" id="U70-wJ-bn3"/>
                         <segue destination="ILg-dr-7xt" kind="presentation" identifier="loginSegue" id="SEz-oG-RTM"/>
-                        <segue destination="jqb-Qg-xQ8" kind="show" identifier="eventSegue" id="jvV-vo-HD4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -196,7 +195,7 @@
         <!--Single Event View Controller-->
         <scene sceneID="u7w-0G-S6p">
             <objects>
-                <viewController id="jqb-Qg-xQ8" customClass="SingleEventViewController" customModule="Event" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="jqb-Qg-xQ8" customClass="SingleEventViewController" customModule="BushelTestProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0SC-Ei-wsy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -355,7 +354,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mDM-ip-AIg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1055.072463768116" y="30.803571428571427"/>
+            <point key="canvasLocation" x="1043" y="-58"/>
         </scene>
     </scenes>
 </document>
