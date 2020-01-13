@@ -90,7 +90,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let event = eventPresenter.getEvents()[indexPath.row]
         
         let eventID = String(event.id)
-    self.navigationController?.pushViewController(SingleEventViewController.create(eventID: eventID), animated: true)
+        self.navigationController?.pushViewController(SingleEventViewController.create(eventID: eventID), animated: true)
 
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -98,13 +98,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "eventSegue" {
-            
-            let singleEventController = segue.destination as? SingleEventViewController
-            singleEventController?.eventID = sender as? String
-            
-        }
-
         //Set self delegate in LoginViewController so can reload table view after authentication
         if segue.identifier == "loginSegue" {
             

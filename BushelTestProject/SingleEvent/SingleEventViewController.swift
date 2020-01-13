@@ -23,10 +23,6 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet var tableView: UITableView!
     
-    var eventID: String?
-    
-    var address: String?
-    
     var tableViewHeightConstraint: NSLayoutConstraint?
     
     //Initializer
@@ -63,12 +59,7 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
     @IBAction func locationBTNPressed(_ sender: UIButton) {
         
         //Opens in Apple Maps
-        let mapsURL = "http://maps.apple.com/?address=" + address!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        if let locationURL = URL(string: mapsURL) {
-
-            UIApplication.shared.open(locationURL, options: [:], completionHandler: nil)
-
-        }
+        presenter.openMapsFromEvenLocation()
  
     }
     
@@ -140,8 +131,6 @@ extension SingleEventViewController: SingleEventView {
         
         locationButton.setTitle(event.location, for: UIControl.State.normal)
         
-        address = event.location
-        
     }
     
     func loadSpeakers(){
@@ -192,4 +181,12 @@ extension SingleEventViewController: SingleEventView {
         self.present(alert, animated: true, completion: nil)
         
     }
+    
+    func openMaps(url: URL) {
+        
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+
+        
+    }
+    
 }

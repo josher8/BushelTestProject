@@ -16,6 +16,7 @@ protocol SingleEventView: class {
     func hideSpinner()
     func presentEventLoadErrorDialog()
     func presentSpeakerLoadErrorDialog()
+    func openMaps(url: URL)
 }
 
 class SingleEventPresenter {
@@ -90,5 +91,18 @@ class SingleEventPresenter {
          return speakerArray
         
      }
+    
+    public func openMapsFromEvenLocation(){
+        
+        //Opens in Apple Maps
+        let mapsURL = "http://maps.apple.com/?address=" + (event?.location.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")
+        if let locationURL = URL(string: mapsURL) {
+
+            self.singleEventView?.openMaps(url: locationURL)
+
+        }
+        
+        
+    }
     
 }
