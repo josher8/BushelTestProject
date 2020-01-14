@@ -31,6 +31,7 @@
         <!--Login View Controller-->
         <scene sceneID="0kT-vO-zQU">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Oj-Tc-YzI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="LoginViewController" id="Cp7-NZ-Zbv" customClass="LoginViewController" customModule="BushelTestProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QWK-u0-RzJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -87,9 +88,8 @@
                         <outlet property="usernameField" destination="nwb-HJ-Lwt" id="GW1-Dw-mXC"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3Oj-Tc-YzI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="282.60869565217394" y="107.8125"/>
+            <point key="canvasLocation" x="352" y="110"/>
         </scene>
     </scenes>
 </document>

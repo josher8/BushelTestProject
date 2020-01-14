@@ -24,5 +24,5 @@ class Event: EVObject {
 }
 
 class SpeakerID: EVObject {
-    var id: Int?
+    var id: Int = 0
 }
