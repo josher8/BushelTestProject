@@ -72,7 +72,7 @@ class SingleEventPresenter {
         
         guard let firstSpeaker = speakers.first else { self.singleEventView?.loadSpeakers(); return }
 
-        self.eventService.loadSpeaker(speakerID: String(firstSpeaker.id ?? 0)) { (speaker) in
+        self.eventService.loadSpeaker(speakerID: String(firstSpeaker.id)) { (speaker) in
 
             guard let speaker = speaker else { self.singleEventView?.presentSpeakerLoadErrorDialog(); return } //TODO:
 

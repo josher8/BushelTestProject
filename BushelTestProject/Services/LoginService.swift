@@ -11,16 +11,16 @@ import Alamofire
 
 class LoginService {
     
-     func login(username:String, password: String, completion: @escaping (Token?) -> Void){
+     func login(username:String, password: String, completion: @escaping (Token?, NSError?) -> Void){
         
         Alamofire.request(LoginRouter.login(username,password)).responseString { response in
             guard response.result.isSuccess,
                 let value = response.result.value else {
                     print("Error while getting token: \(String(describing: response.result.error))")
-                    completion(nil)
+                    completion(nil, response.result.error as NSError?)
                     return
             }
-            completion(Token(json: value))
+            completion(Token(json: value), nil)
         }
         
     }

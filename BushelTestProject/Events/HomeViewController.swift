@@ -22,6 +22,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         vc.modalPresentationStyle = .fullScreen
         vc.presenter = EventPresenter(with: vc)
         vc.navigationItem.hidesBackButton = true
+        
         vc.title = "Events"
         return vc
         
@@ -30,6 +31,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Navigation bar reappears
+        navigationController?.setNavigationBarHidden(false, animated: false)
         self.tableView.isHidden = true        
         
         //Loads Event List
@@ -41,6 +44,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        //Get Events from presenter
         return presenter.getEvents().count
         
     }
@@ -54,7 +58,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         //Sets Event Image on Cell
         if let eventImageView = cell.eventImageView {
             
-            eventImageView.sd_setImage(with: URL(string: event.image_url ?? "") )
+            eventImageView.sd_setImage(with: URL(string: event.image_url) )
             
         }
         
@@ -76,11 +80,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             dateFormatterPrintHA.dateFormat = "ha"
             
             //Get Start Date
-            let startDate = dateFormatterGet.date(from: event.start_date_time ?? "")
+            let startDate = dateFormatterGet.date(from: event.start_date_time)
             let startDateString = dateFormatterPrint.string(from: startDate!)
             
             //Get End Date
-            let endDate = dateFormatterGet.date(from: event.end_date_time ?? "")
+            let endDate = dateFormatterGet.date(from: event.end_date_time)
             let endDateString = dateFormatterPrintHA.string(from: endDate!)
             
             dateLabel.text = startDateString + " - " + endDateString
@@ -92,10 +96,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //Pass event object to Single Event
+        //Pass event idto Single Event
         let event = presenter.getEvents()[indexPath.row]
         
-        let eventID = String(event.id ?? 0)
+        let eventID = String(event.id)
         self.navigationController?.pushViewController(SingleEventViewController.create(eventID: eventID), animated: true)
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -105,6 +109,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Removes user token
     @IBAction func signoutBTNPressed(_ sender: UIBarButtonItem) {
         
+        //Signout user. Goes back to login screen.
         presenter.signOut()
         
     }
@@ -115,6 +120,7 @@ extension HomeViewController: EventListView {
     
     func loadEvents(){
         
+        //Loads event list by unhiding and reloading tableview
         self.tableView.isHidden = false
         self.tableView.reloadData()
         
@@ -131,6 +137,7 @@ extension HomeViewController: EventListView {
     
     func presentEventLoadErrorDialog(){
         
+        //Error dialog if can't get event data
         let alert = UIAlertController.init(title: "Error", message: "There was an error getting event data. Please try log in again", preferredStyle: UIAlertController.Style.alert)
         let defaultAction = UIAlertAction.init(title: "OK", style: UIAlertAction.Style.default, handler: { action in
             
@@ -145,16 +152,23 @@ extension HomeViewController: EventListView {
     
     func presentLoginScreen(){
         
+        //Goes back to login screen from navigation controller
         self.navigationController?.popViewController(animated: true)
         
     }
     
     func showSpinner() {
+        
+        //Shows Activity Indicator from UIViewControllerExtensions
         showSpinner(onView: self.view)
+        
     }
     
     func hideSpinner() {
+        
+        //Hides Activity Indicator from UIViewControllerExtensions
         removeSpinner()
+        
     }
     
     

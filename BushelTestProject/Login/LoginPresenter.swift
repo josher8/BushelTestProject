@@ -11,7 +11,7 @@ import Foundation
 
 protocol LoginView: class {
     
-    func presentLoginError()
+    func presentLoginError(error: String)
     func presentInvalidCredentialsError()
     func showSpinner()
     func hideSpinner()
@@ -38,17 +38,26 @@ class LoginPresenter {
         
             self.loginView?.showSpinner()
             
-            self.loginService.login(username: username, password: password, completion: { token in
+            self.loginService.login(username: username, password: password, completion: { token, error in
                 
                 self.loginView?.hideSpinner()
                 
-                guard let token = token else { self.loginView?.presentLoginError(); return }
-                
-                //Saves Token in UserDefaults.
-                UserDefaults.standard.set(token.token, forKey: "token")
+                //Presents error if there is an error, otherwise login.
+                guard let error = error else {
+                    
+                    guard let token = token else { self.loginView?.presentLoginError(error: "There was an error logging in."); return }
+                    
+                    //Saves Token in UserDefaults.
+                    UserDefaults.standard.set(token.token, forKey: "token")
 
-                //This will login to Homeview
-                self.loginView?.presentHome()
+                    //This will login to Homeview
+                    self.loginView?.presentHome()
+                    
+                    return
+                    
+                }
+                
+                self.loginView?.presentLoginError(error: error.localizedDescription)
                 
                 
             })
@@ -63,7 +72,7 @@ class LoginPresenter {
     
     public func detectToken(){
         
-        //If user hasn't logged in, show login view, else load event list
+        //If token in userdefault, then go to home list view
         if UserDefaults.standard.object(forKey: "token") != nil {
             
             loginView?.presentHome()

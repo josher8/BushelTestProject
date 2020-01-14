@@ -38,12 +38,8 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.estimatedRowHeight = 100.0
-        tableView.rowHeight = UITableView.automaticDimension
-        
         //Set's height constrait. This will change when data is reloaded.
         self.tableViewHeightConstraint = NSLayoutConstraint(item: tableView!, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 100)
-        
         NSLayoutConstraint.activate([self.tableViewHeightConstraint!])
         
     }
@@ -51,7 +47,8 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-
+        
+        //Loads the event data and loads speaker
         presenter?.populateEventandSpeakers()
         
     }
@@ -79,6 +76,7 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
         
         print(indexPath.row)
         
+        //Speaker Name label
         if let nameLabel = cell.nameLabel {
             
             let speakerFirstName = speaker.first_name
@@ -87,6 +85,7 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
             nameLabel.text = "\(speakerFirstName) \(speakerLastName)"
         }
         
+        //Bio label
         if let bioLabel = cell.bioLabel {
             
             bioLabel.text = speaker.bio
@@ -101,11 +100,12 @@ class SingleEventViewController: UIViewController, UITableViewDelegate, UITableV
 
 extension SingleEventViewController: SingleEventView {
     
+    //Populates labels from Event object
     func loadEvent(event: Event){
         
         self.title = event.title
                
-        eventImageView.sd_setImage(with: URL(string: (event.image_url ?? "")) )
+        eventImageView.sd_setImage(with: URL(string: (event.image_url)) )
         
         titleLabel.text = event.title
         
@@ -151,15 +151,22 @@ extension SingleEventViewController: SingleEventView {
     }
     
     func showSpinner() {
+        
+        //Shows Activity Indicator from UIViewControllerExtensions
         showSpinner(onView: self.view)
+        
     }
     
     func hideSpinner() {
+        
+        //Hides Activity Indicator from UIViewControllerExtensions
         removeSpinner()
+        
     }
     
     func presentEventLoadErrorDialog(){
         
+        //Error message if unable to get event data
         let alert = UIAlertController.init(title: "Error", message: "There was an error getting the event data.", preferredStyle: UIAlertController.Style.alert)
         let defaultAction = UIAlertAction.init(title: "OK", style: UIAlertAction.Style.default, handler: { action in
             
@@ -172,6 +179,7 @@ extension SingleEventViewController: SingleEventView {
     
     func presentSpeakerLoadErrorDialog(){
         
+        //Error if unable to get the speakers
         let alert = UIAlertController.init(title: "Error", message: "There was an error getting the speaker data.", preferredStyle: UIAlertController.Style.alert)
         let defaultAction = UIAlertAction.init(title: "OK", style: UIAlertAction.Style.default, handler: { action in
             
@@ -184,6 +192,7 @@ extension SingleEventViewController: SingleEventView {
     
     func openMaps(url: URL) {
         
+        //Opens address in Apple Maps
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
 
         
