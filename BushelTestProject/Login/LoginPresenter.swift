@@ -31,10 +31,6 @@ class LoginPresenter {
         
     }
     
-    public func setViewDelegate(loginViewDelegate: LoginView?){
-        self.loginView = loginViewDelegate
-    }
-    
     public func loginUserSaveToken(username : String, password : String) {
         
         //If Username and password field don't have an characters, show an alert

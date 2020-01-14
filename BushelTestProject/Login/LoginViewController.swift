@@ -26,6 +26,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
         //Init Presenter
         presenter = LoginPresenter(with: self)
         
+        //Tryign stuff here. Will change after review
 //        stackView.setCustomSpacing(400, after: appName)
         stackView.setCustomSpacing(8, after: usernameField)
 //        stackView.setCustomSpacing(50, after: passwordField)

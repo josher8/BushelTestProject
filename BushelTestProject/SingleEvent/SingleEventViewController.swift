@@ -105,7 +105,7 @@ extension SingleEventViewController: SingleEventView {
         
         self.title = event.title
                
-        eventImageView.sd_setImage(with: URL(string: (event.image_url)) )
+        eventImageView.sd_setImage(with: URL(string: (event.image_url ?? "")) )
         
         titleLabel.text = event.title
         

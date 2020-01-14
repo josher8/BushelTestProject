@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol EventListViewDelegate: NSObjectProtocol {
+protocol EventListView: class {
     
     func loadEvents()
     func presentEventLoadErrorDialog()
@@ -24,39 +24,31 @@ protocol EventListViewDelegate: NSObjectProtocol {
 class EventPresenter{
     
     private let eventService: EventService
-    weak private var eventListViewDelegate: EventListViewDelegate?
+    weak private var eventListView: EventListView?
     
     private var eventArray: [Event] = []
         
-    init(){
+    init(with view: EventListView){
         
+        self.eventListView = view.self
         self.eventService = EventService()
-        
-    }
-    
-    //------------------- HomeViewController methods 
-    
-    //Sets Eventlist delegate in HomeViewController
-    public func setEventListViewDelegate(eventListViewDelegate: EventListViewDelegate){
-        
-        self.eventListViewDelegate = eventListViewDelegate
         
     }
 
     //Loads Event List in HomeView Controller
     func populateEventList(){
         
-        self.eventListViewDelegate?.showSpinner()
+        self.eventListView?.showSpinner()
         
         self.eventService.loadEventList(completion: {
             events in
             
-            self.eventListViewDelegate?.hideSpinner()
+            self.eventListView?.hideSpinner()
             
-            guard let events = events else { self.eventListViewDelegate?.presentEventLoadErrorDialog(); return }
+            guard let events = events else { self.eventListView?.presentEventLoadErrorDialog(); return }
             
             self.eventArray = events
-            self.eventListViewDelegate?.loadEvents()
+            self.eventListView?.loadEvents()
         })
         
     }
@@ -70,38 +62,24 @@ class EventPresenter{
 
     //Clears user token
     public func clearToken(){
-        
-        if UserDefaults.standard.object(forKey: "token") != nil{
-            
-            UserDefaults.standard.set(nil, forKey: "token")
-            
-        }
-        
+
+        UserDefaults.standard.set(nil, forKey: "token")
+
     }
     
     public func signOut(){
         
-        //Removes token and empties array.
+        //Removes token,empties array, and goes to login screen.
         if UserDefaults.standard.object(forKey: "token") != nil{
             
-            UserDefaults.standard.set(nil, forKey: "token")
+            clearToken()
             eventArray.removeAll()
             //Hides and reloads table in case there is data in view
-            self.eventListViewDelegate?.hideTable()
-            self.eventListViewDelegate?.presentLoginScreen()
-            
-        }else{
-            
-            self.eventListViewDelegate?.hideTable()
-            self.eventListViewDelegate?.presentLoginScreen()
+            self.eventListView?.hideTable()
+            self.eventListView?.presentLoginScreen()
             
         }
     }
-    
-    public func presentLoginScreen(){
-        
-        self.eventListViewDelegate?.presentLoginScreen()
-        
-    }
+
 
 }
