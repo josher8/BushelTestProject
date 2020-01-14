@@ -9,15 +9,22 @@
 import UIKit
 import SDWebImage
 
-protocol reloadEvents {
-    func loadEventList()
-}
-
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EventListViewDelegate, reloadEvents {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EventListViewDelegate {
     
     private let eventPresenter = EventPresenter()
     
     @IBOutlet var tableView: UITableView!
+    
+    //Initializer
+    static func create() -> HomeViewController{
+        
+        let vc = UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        vc.modalPresentationStyle = .fullScreen
+//        vc.presenter = SingleEventPresenter(with: vc, eventID: eventID)
+        return vc
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,24 +103,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        //Set self delegate in LoginViewController so can reload table view after authentication
-        if segue.identifier == "loginSegue" {
-            
-            let loginController = segue.destination as? LoginViewController
-            loginController?.reloadListDelegate = self
-            
-        }
-        
-    }
-    
     func loadEventList(){
         
         //If user hasn't logged in, show login view, else load event list
         if UserDefaults.standard.object(forKey: "token") == nil || UserDefaults.standard.object(forKey: "token") as! String == ""{
             
-            eventPresenter.presentLoginScreen()
+//            eventPresenter.presentLoginScreen()
             
         }else{
 

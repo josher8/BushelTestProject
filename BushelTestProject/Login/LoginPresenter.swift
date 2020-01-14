@@ -9,59 +9,72 @@
 import Foundation
 
 
-protocol LoginViewDelegate: NSObjectProtocol {
-    func dismissView()
+protocol LoginView: class {
+    
     func presentLoginError()
     func presentInvalidCredentialsError()
-    func reloadHomeList()
     func showSpinner()
     func hideSpinner()
+    func presentHome()
+    
 }
 
 class LoginPresenter {
     
     private let loginService: LoginService
-    weak private var loginViewDelegate: LoginViewDelegate?
+    weak private var loginView: LoginView?
 
-    init(loginService: LoginService){
-        self.loginService = loginService
+    init(with view: LoginView){
+        
+        self.loginView = view.self
+        self.loginService = LoginService()
+        
     }
     
-    public func setViewDelegate(loginViewDelegate: LoginViewDelegate?){
-        self.loginViewDelegate = loginViewDelegate
+    public func setViewDelegate(loginViewDelegate: LoginView?){
+        self.loginView = loginViewDelegate
     }
     
     public func loginUserSaveToken(username : String, password : String) {
         
-        self.loginViewDelegate?.showSpinner()
+        //If Username and password field don't have an characters, show an alert
+        if (username.count > 0) && (password.count > 0){
         
-        self.loginService.login(username: username, password: password, completion: { token in
+            self.loginView?.showSpinner()
             
-            if token != nil {
+            self.loginService.login(username: username, password: password, completion: { token in
+                
+                self.loginView?.hideSpinner()
+                
+                guard let token = token else { self.loginView?.presentLoginError(); return }
                 
                 //Saves Token in UserDefaults.
-                UserDefaults.standard.set(token?.token, forKey: "token")
-                //This will retry to login on HomeViewController
-                self.loginViewDelegate?.reloadHomeList()
-                self.loginViewDelegate?.dismissView()
+                UserDefaults.standard.set(token.token, forKey: "token")
+
+                //This will login to Homeview
+                self.loginView?.presentHome()
                 
                 
-            } else {
-                
-                self.loginViewDelegate?.presentLoginError()
-                
-            }
+            })
             
-            self.loginViewDelegate?.hideSpinner()
+        } else {
             
-        })
+            self.loginView?.presentInvalidCredentialsError()
+            
+        }
         
     }
     
-    public func presentInvalidCredentialsError(){
-
-        self.loginViewDelegate?.presentInvalidCredentialsError()
+    public func detectToken(){
+        
+        //If user hasn't logged in, show login view, else load event list
+        if UserDefaults.standard.object(forKey: "token") != nil {
+            
+            loginView?.presentHome()
+            
+        }
         
     }
+    
     
 }

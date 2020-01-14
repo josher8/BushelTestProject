@@ -8,29 +8,28 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate, LoginViewDelegate  {
+class LoginViewController: UIViewController, UITextFieldDelegate  {
     
-    private let loginPresenter = LoginPresenter(loginService: LoginService())
-    //Delegate to reload Home View Controller
-    var reloadListDelegate: reloadEvents?
+    var presenter: LoginPresenter?
 
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
-    @IBOutlet var loginView: UIView!
     @IBOutlet var loginLabel: UILabel!
+    @IBOutlet var appName: UILabel!
+    @IBOutlet var stackView: UIStackView!
     
-    var loginGesture: UITapGestureRecognizer!
     var textFieldTapRecognizer: UITapGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Set LoginViewDelegate
-        loginPresenter.setViewDelegate(loginViewDelegate: self)
+        //Init Presenter
+        presenter = LoginPresenter(with: self)
         
-        //Set up views
-        loginView.layer.cornerRadius = 4
-        loginGesture = UITapGestureRecognizer.init(target: self, action: #selector(self.pressedLoginButton(_:)))
+//        stackView.setCustomSpacing(400, after: appName)
+        stackView.setCustomSpacing(8, after: usernameField)
+//        stackView.setCustomSpacing(50, after: passwordField)
+        
         
         //Set Textfield Delegate
         usernameField.delegate = self
@@ -39,8 +38,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginViewDeleg
         //Add Text Field recognizer on view so you can dismiss the textfield
         textFieldTapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(self.handleTextFieldTap(_:)))
         textFieldTapRecognizer.cancelsTouchesInView = false
-        loginView.addGestureRecognizer(loginGesture)
+        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        presenter?.detectToken()
+        
+    }
+    
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
@@ -67,43 +74,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginViewDeleg
         
     }
     
-    
-    @objc func pressedLoginButton(_ tapGestureRecognizer:UITapGestureRecognizer){
-        
-        //In a seperate function so can still login by pressing return after password field
-        loginPressed()
-    }
-    
     func loginPressed() {
         
-        //Removes Gesture so it doesn't get tapped more then once. Gets added back on completion
-        loginView.removeGestureRecognizer(loginGesture)
-        
-        //If Username and password field don't have an characters, show an alert
-        if ((usernameField.text?.count)! > 0) && ((passwordField.text?.count)! > 0){
+        //Login User
+        presenter?.loginUserSaveToken(username: usernameField.text!, password: passwordField.text!)
 
-            loginPresenter.loginUserSaveToken(username: usernameField.text!, password: passwordField.text!)
-            
-        }else{
-            
-            loginPresenter.presentInvalidCredentialsError()
-            
-        }
+    }
+    
+    @IBAction func loginBTNPressed(_ sender: UIButton) {
+        
+        loginPressed()
         
     }
     
-    
-    //Methods for Presenter
-    
-    func dismissView() {
+}
+
+extension LoginViewController: LoginView {
         
-        self.dismiss(animated: true, completion: nil)
-        
-    }
-    
     func presentLoginError() {
         
-        self.loginView.addGestureRecognizer(self.loginGesture)
         let alert = UIAlertController.init(title: "Error", message: "There was an error logging in.", preferredStyle: UIAlertController.Style.alert)
         let defaultAction = UIAlertAction.init(title: "OK", style: UIAlertAction.Style.default, handler: {action in })
         alert.addAction(defaultAction)
@@ -112,18 +101,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginViewDeleg
     }
     
     func presentInvalidCredentialsError(){
-
-        loginView.addGestureRecognizer(loginGesture)
         
         let alert = UIAlertController.init(title: "Error", message: "Please Enter a Valid Username and Password", preferredStyle: UIAlertController.Style.alert)
         let defaultAction = UIAlertAction.init(title: "OK", style: UIAlertAction.Style.default, handler: {action in })
         alert.addAction(defaultAction)
         self.present(alert, animated: true, completion: nil)
         
-    }
-    
-    func reloadHomeList(){
-        self.reloadListDelegate?.loadEventList()
     }
     
     func showSpinner() {
@@ -133,6 +116,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginViewDeleg
     func hideSpinner() {
         removeSpinner()
     }
-
+    
+    func presentHome(){
+        
+        self.navigationController?.pushViewController(HomeViewController.create(), animated: true)
+        
+    }
+    
+    
 }
+
+
 
